@@ -1,0 +1,22 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { AuthCard } from '@/components/auth/auth-card';
+import { LoginForm } from '@/components/auth/login-form';
+---
+
+<Layout title="ورود به حساب کاربری">
+  <div class="container flex items-center justify-center min-h-[calc(100vh-4rem)] py-8">
+    <AuthCard
+      client:load
+      title="ورود به حساب کاربری"
+      description="برای دسترسی به آزمون‌ها وارد حساب کاربری خود شوید"
+    >
+      <LoginForm client:load onSubmit={() => {}} />
+      <div class="mt-6 text-center">
+        <span class="text-muted-foreground">حساب کاربری ندارید؟</span>
+        <a href="/auth/register" class="text-primary hover:underline mr-1">ثبت‌نام کنید</a>
+      </div>
+    </AuthCard>
+  </div>
+</Layout>
+---

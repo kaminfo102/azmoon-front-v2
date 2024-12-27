@@ -1,0 +1,95 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { Button } from '@/components/ui/button';
+import { ResultSummary } from '@/components/test/results/result-summary';
+import { ResultChart } from '@/components/test/results/result-chart';
+import { AnswerReview } from '@/components/test/results/answer-review';
+import { Download, Home } from 'lucide-react';
+
+const { id } = Astro.params;
+
+// Mock data - در پروژه واقعی از API یا دیتابیس دریافت می‌شود
+const resultData = {
+  totalQuestions: 10,
+  correctAnswers: 7,
+  wrongAnswers: 2,
+  skippedAnswers: 1,
+  score: 70,
+  timeTaken: 1800,
+  passingScore: 60,
+  answers: [
+    {
+      questionNumber: 1,
+      questionText: 'کدام یک از موارد زیر یک نوع داده اولیه در جاوااسکریپت نیست؟',
+      userAnswer: 'Array',
+      correctAnswer: 'Array',
+      isCorrect: true
+    },
+    {
+      questionNumber: 2,
+      questionText: 'کدام متد آرایه، یک آرایه جدید ایجاد نمی‌کند؟',
+      userAnswer: 'map()',
+      correctAnswer: 'push()',
+      isCorrect: false
+    }
+  ]
+};
+---
+
+<Layout title="نتیجه آزمون">
+  <div class="container py-8">
+    <div class="max-w-4xl mx-auto space-y-8">
+      <div class="flex justify-between items-center">
+        <h1 class="text-3xl font-bold">نتیجه آزمون</h1>
+        <div class="flex gap-4">
+          <Button variant="outline">
+            <Download className="ml-2 h-4 w-4" />
+            دریافت گواهی
+          </Button>
+          <Button variant="default" asChild>
+            <a href="/">
+              <Home className="ml-2 h-4 w-4" />
+              بازگشت به خانه
+            </a>
+          </Button>
+        </div>
+      </div>
+
+      <ResultSummary
+        client:load
+        totalQuestions={resultData.totalQuestions}
+        correctAnswers={resultData.correctAnswers}
+        wrongAnswers={resultData.wrongAnswers}
+        score={resultData.score}
+        timeTaken={resultData.timeTaken}
+        passingScore={resultData.passingScore}
+      />
+
+      <div class="grid gap-6 md:grid-cols-2">
+        <ResultChart
+          client:load
+          correctAnswers={resultData.correctAnswers}
+          wrongAnswers={resultData.wrongAnswers}
+          skippedAnswers={resultData.skippedAnswers}
+        />
+        <div class="space-y-4">
+          <h2 class="text-2xl font-semibold">نکات مهم</h2>
+          <ul class="space-y-2 text-muted-foreground">
+            <li>• بیشترین تسلط شما در بخش متغیرها و توابع بوده است.</li>
+            <li>• نیاز به تمرین بیشتر در بخش آرایه‌ها دارید.</li>
+            <li>• سرعت پاسخگویی شما مناسب بوده است.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="text-2xl font-semibold mb-4">مرور پاسخ‌ها</h2>
+        <AnswerReview
+          client:load
+          answers={resultData.answers}
+        />
+      </div>
+    </div>
+  </div>
+</Layout>
+---

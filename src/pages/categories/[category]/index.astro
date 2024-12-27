@@ -1,0 +1,105 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { TestList } from '@/components/tests/test-list';
+import { Badge } from '@/components/ui/badge';
+
+export async function getStaticPaths() {
+  return [
+    { params: { category: 'programming' } },
+    { params: { category: 'english' } },
+  ];
+}
+
+const { category } = Astro.params;
+
+const categoryData = {
+  programming: {
+    title: 'برنامه‌نویسی',
+    description: 'آزمون‌های مرتبط با برنامه‌نویسی و توسعه نرم‌افزار',
+    image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&h=400&fit=crop',
+    tags: ['جاوااسکریپت', 'پایتون', 'جاوا', 'سی‌شارپ']
+  },
+  english: {
+    title: 'زبان انگلیسی',
+    description: 'آزمون‌های تعیین سطح و مهارت زبان انگلیسی',
+    image: 'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=800&h=400&fit=crop',
+    tags: ['آیلتس', 'تافل', 'مکالمه', 'گرامر']
+  }
+}[category as string] || {
+  title: 'دسته‌بندی نامعتبر',
+  description: 'دسته‌بندی مورد نظر یافت نشد',
+  image: '',
+  tags: []
+};
+
+const tests = [
+  {
+    id: 'javascript-basics',
+    title: 'مبانی جاوااسکریپت',
+    description: 'آزمون جامع مفاهیم پایه‌ای جاوااسکریپت',
+    duration: 45,
+    participantCount: 1234,
+    difficulty: 'متوسط',
+    isFree: true,
+    rating: 4.8,
+    image: 'https://images.unsplash.com/photo-1579468118864-1b9ea3c0db4a?w=500&h=300&fit=crop',
+    tags: ['ES6', 'مبتدی', 'فرانت‌اند']
+  },
+  // Add more tests...
+];
+---
+
+<Layout title={categoryData.title}>
+  <div class="relative">
+    <div class="h-48 md:h-64 overflow-hidden">
+      <img
+        src={categoryData.image}
+        alt={categoryData.title}
+        class="w-full h-full object-cover"
+      />
+      <div class="absolute inset-0 bg-gradient-to-b from-transparent to-background/95"></div>
+    </div>
+    
+    <div class="container relative -mt-24 pb-8">
+      <div class="bg-card rounded-lg shadow-lg p-6 md:p-8">
+        <div class="flex flex-col gap-6">
+          <div>
+            <h1 class="text-3xl font-bold mb-2">{categoryData.title}</h1>
+            <p class="text-muted-foreground mb-4">
+              {categoryData.description}
+            </p>
+            <div class="flex flex-wrap gap-2">
+              {categoryData.tags.map((tag) => (
+                <Badge variant="secondary">{tag}</Badge>
+              ))}
+            </div>
+          </div>
+
+          <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div class="flex gap-4">
+              <select class="px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-primary">
+                <option value="">همه سطح‌ها</option>
+                <option value="easy">آسان</option>
+                <option value="medium">متوسط</option>
+                <option value="hard">سخت</option>
+              </select>
+              <select class="px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-primary">
+                <option value="">مرتب‌سازی</option>
+                <option value="newest">جدیدترین</option>
+                <option value="popular">محبوب‌ترین</option>
+                <option value="rating">بالاترین امتیاز</option>
+              </select>
+            </div>
+            <input
+              type="search"
+              placeholder="جستجو در آزمون‌ها..."
+              class="w-full md:w-64 px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-primary"
+            />
+          </div>
+
+          <TestList client:load initialTests={tests} pageSize={6} />
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

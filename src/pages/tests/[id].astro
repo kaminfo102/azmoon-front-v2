@@ -1,0 +1,53 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { TestContainer } from '@/components/test/test-container';
+
+export async function getStaticPaths() {
+  const testIds = ['javascript-basics', 'advanced-react', 'typescript'];
+  return testIds.map(id => ({ params: { id } }));
+}
+
+const { id } = Astro.params;
+
+const testData = {
+  'javascript-basics': {
+    title: 'مبانی جاوااسکریپت',
+    description: 'آزمون جامع مفاهیم پایه‌ای جاوااسکریپت',
+    duration: 45,
+    questions: [
+      {
+        id: '1',
+        text: 'کدام یک از موارد زیر یک نوع داده اولیه در جاوااسکریپت نیست؟',
+        options: [
+          { id: 'a', text: 'String' },
+          { id: 'b', text: 'Boolean' },
+          { id: 'c', text: 'Array' },
+          { id: 'd', text: 'Number' }
+        ]
+      },
+      {
+        id: '2',
+        text: 'کدام متد آرایه، یک آرایه جدید ایجاد نمی‌کند؟',
+        options: [
+          { id: 'a', text: 'map()' },
+          { id: 'b', text: 'filter()' },
+          { id: 'c', text: 'push()' },
+          { id: 'd', text: 'slice()' }
+        ]
+      }
+    ]
+  }
+}[id as string];
+---
+
+<Layout title={testData.title}>
+  <TestContainer
+    client:load
+    questions={testData.questions}
+    duration={testData.duration}
+    onComplete={() => {
+      window.location.href = `/tests/${id}/results`;
+    }}
+  />
+</Layout>
+---

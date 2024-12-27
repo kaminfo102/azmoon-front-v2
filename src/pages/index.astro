@@ -1,0 +1,207 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Users, Trophy, BookOpen, Timer, Star, TrendingUp } from 'lucide-react';
+
+const features = [
+  {
+    icon: Users,
+    title: 'جامعه فعال',
+    description: 'بیش از ۱۰،۰۰۰ کاربر فعال در پلتفرم'
+  },
+  {
+    icon: Trophy,
+    title: 'گواهینامه معتبر',
+    description: 'دریافت گواهینامه پس از قبولی در آزمون‌ها'
+  },
+  {
+    icon: BookOpen,
+    title: 'محتوای به‌روز',
+    description: 'به‌روزرسانی مداوم سوالات و محتوا'
+  },
+  {
+    icon: Timer,
+    title: 'آزمون آنلاین',
+    description: 'برگزاری آزمون در هر زمان و مکان'
+  }
+];
+
+const stats = [
+  { value: '۱۰،۰۰۰+', label: 'کاربر فعال' },
+  { value: '۵۰۰+', label: 'آزمون' },
+  { value: '۹۵٪', label: 'رضایت کاربران' },
+  { value: '۲۴/۷', label: 'پشتیبانی' }
+];
+
+const popularTests = [
+  {
+    title: 'جاوااسکریپت مقدماتی',
+    category: 'برنامه‌نویسی',
+    participants: 1234,
+    rating: 4.8,
+    image: 'https://images.unsplash.com/photo-1579468118864-1b9ea3c0db4a?w=500&h=300&fit=crop'
+  },
+  {
+    title: 'آیلتس آکادمیک',
+    category: 'زبان انگلیسی',
+    participants: 2156,
+    rating: 4.9,
+    image: 'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=500&h=300&fit=crop'
+  },
+  {
+    title: 'هوش مصنوعی',
+    category: 'علوم کامپیوتر',
+    participants: 876,
+    rating: 4.7,
+    image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=500&h=300&fit=crop'
+  }
+];
+---
+
+<Layout title="سامانه آزمون آنلاین">
+  <!-- Hero Section -->
+  <section class="relative overflow-hidden bg-gradient-to-b from-primary/10 to-background pt-16 pb-32">
+    <div class="container">
+      <div class="grid gap-8 lg:grid-cols-2 lg:gap-12 items-center">
+        <div class="space-y-6">
+          <h1 class="text-4xl font-extrabold leading-tight tracking-tighter md:text-5xl lg:text-6xl">
+            سامانه جامع <span class="text-primary">آزمون آنلاین</span>
+          </h1>
+          <p class="text-xl text-muted-foreground">
+            با استفاده از سامانه آزمون آنلاین، می‌توانید در آزمون‌های مختلف شرکت کنید و مهارت‌های خود را بسنجید.
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <Button size="lg" asChild>
+              <a href="/categories">شروع آزمون</a>
+            </Button>
+            <Button size="lg" variant="outline" asChild>
+              <a href="/about">درباره ما</a>
+            </Button>
+          </div>
+        </div>
+        <div class="relative hidden lg:block">
+          <img
+            src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&h=600&fit=crop"
+            alt="Online Examination"
+            class="rounded-lg shadow-2xl"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="py-16 bg-primary/5">
+    <div class="container">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+        {stats.map(({ value, label }) => (
+          <div class="text-center space-y-2">
+            <div class="text-3xl font-bold text-primary">{value}</div>
+            <div class="text-sm text-muted-foreground">{label}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="py-16">
+    <div class="container">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold mb-4">ویژگی‌های منحصر به فرد</h2>
+        <p class="text-muted-foreground">تجربه متفاوت آزمون آنلاین با امکانات پیشرفته</p>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {features.map(({ icon: Icon, title, description }) => (
+          <Card className="text-center">
+            <CardHeader>
+              <div class="mx-auto w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                <Icon className="w-6 h-6 text-primary" />
+              </div>
+              <CardTitle>{title}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p class="text-muted-foreground">{description}</p>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Popular Tests Section -->
+  <section class="py-16 bg-primary/5">
+    <div class="container">
+      <div class="flex justify-between items-center mb-8">
+        <div>
+          <h2 class="text-3xl font-bold mb-2">آزمون‌های محبوب</h2>
+          <p class="text-muted-foreground">پرطرفدارترین آزمون‌های هفته</p>
+        </div>
+        <Button variant="outline" asChild>
+          <a href="/categories">مشاهده همه</a>
+        </Button>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {popularTests.map((test) => (
+          <Card className="group hover:shadow-lg transition-shadow">
+            <CardHeader className="p-0">
+              <div class="relative">
+                <img
+                  src={test.image}
+                  alt={test.title}
+                  class="w-full aspect-video object-cover rounded-t-lg"
+                />
+                <Badge className="absolute top-4 right-4">{test.category}</Badge>
+              </div>
+            </CardHeader>
+            <CardContent className="pt-6">
+              <h3 class="text-xl font-semibold mb-2">{test.title}</h3>
+              <div class="flex justify-between text-sm text-muted-foreground">
+                <div class="flex items-center gap-1">
+                  <Users className="w-4 h-4" />
+                  <span>{test.participants} شرکت‌کننده</span>
+                </div>
+                <div class="flex items-center gap-1">
+                  <Star className="w-4 h-4 text-yellow-500" />
+                  <span>{test.rating}</span>
+                </div>
+              </div>
+            </CardContent>
+            <CardFooter>
+              <Button className="w-full group-hover:bg-primary/90" asChild>
+                <a href={`/tests/${test.title}`}>شروع آزمون</a>
+              </Button>
+            </CardFooter>
+          </Card>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-16">
+    <div class="container">
+      <Card className="bg-primary text-primary-foreground">
+        <CardContent className="p-12">
+          <div class="grid lg:grid-cols-2 gap-8 items-center">
+            <div class="space-y-4">
+              <h2 class="text-3xl font-bold">همین حالا شروع کنید!</h2>
+              <p class="text-primary-foreground/90">
+                با ثبت‌نام در سامانه، به هزاران آزمون و محتوای آموزشی دسترسی پیدا کنید.
+              </p>
+              <Button size="lg" variant="secondary" asChild>
+                <a href="/auth/register">ثبت‌نام رایگان</a>
+              </Button>
+            </div>
+            <div class="hidden lg:flex justify-end">
+              <TrendingUp className="w-48 h-48 text-primary-foreground/20" />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  </section>
+</Layout>
+---
